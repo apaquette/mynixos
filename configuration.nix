@@ -135,7 +135,6 @@
     #software dev
     vscode
     dotnet-sdk_9
-    git
 
     # misc
     iw
@@ -143,8 +142,13 @@
   #  wget
   ];
 
-  programs.git.config = {
-    init.defaultBranch = "main";
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "main";
+      user.name = "Alex Paquette";
+      user.email = "alexandre.d.paquette@gmail.com";
+    };
 };
 
   # Some programs need SUID wrappers, can be configured further or are
