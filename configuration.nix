@@ -2,13 +2,16 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, inputs, ... }:
+let 
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+in 
 {
   imports = [
     ./hardware-configuration.nix # Include the results of the hardware scan.
     ./gaming.nix
     ./software.nix
+    (import "${home-manager}/nixos")
   ];
 
   nix.settings.experimental-features = [
@@ -105,6 +108,62 @@
     ];
   };
 
+  /*home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.apaquette = {
+    home.stateVersion = "18.09";
+      programs.vscode = {
+        enable = true;
+        mutableExtensionDir = false;
+        enableUpdateCheck = false;
+        enableExtensionUpdateCheck = false;
+        package = pkgs.vscode.fhs;
+        userSettings = {
+          "dotnetAcquisitionExtension.sharedExistingDotnetPath" = "/run/current-system/sw/bin/dotnet";
+        };
+      };
+    };
+  };
+
+  home-manager.users.apaquette = { pkgs, ...}: {
+    home.stateVersion = "18.09";
+    nixpkgs.config.allowUnfree = true;
+
+    programs.vscode = {
+      enable = true;
+
+      package = pkgs.vscode.fhsWithPackages (ps: with ps; [
+        dotnet-sdk_9
+        zlib
+        icu
+        openssl
+        libunwind
+        glib
+        libgcc
+      ]);
+      userSettings = {
+        "workbench.colorTheme" = "Adwaita Dark & default syntax highlighting & colorful status bar";
+        "workbench.startupEditor" = "none";
+        "git.autofetch" = true;
+        "git.confirmSync" = false;
+        "security.workspace.trust.untrustedFiles" = "open";
+        "editor.largeFileOptimizations" = false;
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "nix.formatterPath" = "nixfmt";
+        "dotnetAcquisitionExtension.sharedExistingDotnetPath" = "/run/current-system/sw/bin/dotnet";
+        "prettier.printWidth" = 120;
+      };
+      extensions = with pkgs.vscode-extensions; [
+        piousdeer.adwaita-theme
+        yzhang.markdown-all-in-one
+        esbenp.prettier-vscode
+        jnoortheen.nix-ide
+      ];
+    };
+    xdg.configFile."Code/User/settings.json".force = true;
+  };*/
+
   users.defaultUserShell = pkgs.fish;
 
   # Enable automatic login for the user.
@@ -132,15 +191,16 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #software dev
-    vscode
-    dotnet-sdk_9
-
-    # misc
+    vscode.fhs
+    dotnetCorePackages.sdk_9_0-bin
+    # dotnet-sdk_9
     iw
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
+
+  #programs.dotnet.enable = true;
+
 
   programs.git = {
     enable = true;
@@ -149,7 +209,7 @@
       user.name = "Alex Paquette";
       user.email = "alexandre.d.paquette@gmail.com";
     };
-};
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
