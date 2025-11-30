@@ -6,6 +6,11 @@
   config,
   pkgs,
   lib,
+  username,
+  name,
+  hostname,
+  timezone,
+  locale,
   ...
 }: 
 
@@ -36,7 +41,7 @@
     # boot.loader.systemd-boot.enable = true;
     # boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "nixos"; # Define your hostname.
+    networking.hostName = hostname; # Define your hostname.
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -47,10 +52,10 @@
     networking.networkmanager.enable = true;
 
     # Set your time zone.
-    time.timeZone = "America/Halifax";
+    time.timeZone = timezone;
 
     # Select internationalisation properties.
-    i18n.defaultLocale = "en_CA.UTF-8";
+    i18n.defaultLocale = locale;
 
     # Enable the X11 windowing system.# You can disable this if you're only using the Wayland session.
     services.xserver.enable = true;
@@ -95,10 +100,10 @@
     # services.xserver.libinput.enable = true;
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.apaquette = {
+    users.users.${username} = {
       isNormalUser = true;
       shell = pkgs.fish;
-      description = "Alex Paquette";
+      description = name;
       extraGroups = [ "networkmanager" "wheel" ];
       packages = with pkgs; [
         kdePackages.kate
@@ -109,7 +114,7 @@
 
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = "apaquette";
+    services.displayManager.autoLogin.user = username;
 
     # Automatic updating
     system.autoUpgrade = {
