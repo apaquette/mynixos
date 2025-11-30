@@ -7,8 +7,26 @@
 
     outputs = {self, nixpkgs, home-manager, ...}: 
     let
-        lib = nixpkgs.lib;
+        # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
+        hostname = "nixos";
+        # profile
+        timezone = "America/Halifax";
+        locale = "en_CA.UTF-8";
+
+
+        # ----------- USER SETTINGS ----------- #
+        username = "apaquette";
+        name = "Alex Paquette";
+        email = "alexandre.d.paquette@gmail.com";
+        dotfilesDir = "~/.dotfiles";
+        # theme
+        # windowManager
+        # windowManagerType
+        # browser
+        # editor
+
+        lib = nixpkgs.lib;
         pkgs = nixpkgs.legacyPackages.${system};
     in {
         nixosConfigurations = {
@@ -19,12 +37,26 @@
                     ./gaming.nix
                     ./software.nix
                 ];
+                specialArgs = {
+                    inherit username;
+                    inherit name;
+                    inherit hostname;
+                    inherit timezone;
+                    inherit locale;
+                };
             };
         };
         homeConfigurations = {
             apaquette = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
-                modules = [ ./home.nix ];
+                modules = [ ./user/home.nix ];
+                extraSpecialArgs = {
+                    inherit username;
+                    inherit name;
+                    inherit hostname;
+                    inherit email;
+                    inherit dotfilesDir;
+                };
             };
         };
     };
