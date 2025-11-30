@@ -1,9 +1,6 @@
 { pkgs, ... }:
 
 {
-  # Enable xone for Xbox wireless adapter
-  hardware.xone.enable = true;
-
   # Enable steam
   programs.steam = {
     enable = true;
