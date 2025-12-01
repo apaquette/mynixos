@@ -1,4 +1,6 @@
 {
+    description = "Flake of Alex Paquette";
+
     inputs = { 
         nixpkgs.url = "nixpkgs/nixos-25.05";
         home-manager.url = "github:nix-community/home-manager/release-25.05";
@@ -48,9 +50,11 @@
             };
         };
         homeConfigurations = {
-            apaquette = home-manager.lib.homeManagerConfiguration {
+            userSettings.username = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
-                modules = [ ./user/home.nix ];
+                modules = [ 
+                    ./user/home.nix
+                ];
                 extraSpecialArgs = {
                     inherit userSettings;
                     inherit hostname;
