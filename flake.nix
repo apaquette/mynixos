@@ -16,10 +16,12 @@
 
 
         # ----------- USER SETTINGS ----------- #
-        username = "apaquette";
-        name = "Alex Paquette";
-        email = "alexandre.d.paquette@gmail.com";
-        dotfilesDir = "~/.dotfiles";
+        userSettings = {
+            username = "apaquette";
+            name = "Alex Paquette";
+            email = "alexandre.d.paquette@gmail.com";
+            dotfilesDir = "~/.dotfiles";
+        };
         # theme
         # windowManager
         # windowManagerType
@@ -38,8 +40,7 @@
                     ./software.nix
                 ];
                 specialArgs = {
-                    inherit username;
-                    inherit name;
+                    inherit userSettings;
                     inherit hostname;
                     inherit timezone;
                     inherit locale;
@@ -51,11 +52,8 @@
                 inherit pkgs;
                 modules = [ ./user/home.nix ];
                 extraSpecialArgs = {
-                    inherit username;
-                    inherit name;
+                    inherit userSettings;
                     inherit hostname;
-                    inherit email;
-                    inherit dotfilesDir;
                 };
             };
         };

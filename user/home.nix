@@ -1,11 +1,8 @@
 { 
   config, 
   pkgs, 
-  username,
-  name,
+  userSettings,
   hostname,
-  email,
-  dotfilesDir,
   ... 
 }:
 
@@ -15,8 +12,8 @@
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = username;
-  home.homeDirectory = "/home/${username}";
+  home.username = userSettings.username;
+  home.homeDirectory = "/home/${userSettings.username}";
 
   # The home.packages option allows you to install Nix packages into your
   # environment.

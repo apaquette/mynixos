@@ -6,8 +6,7 @@
   config,
   pkgs,
   lib,
-  username,
-  name,
+  userSettings,
   hostname,
   timezone,
   locale,
@@ -100,10 +99,10 @@
     # services.xserver.libinput.enable = true;
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.${username} = {
+    users.users.${userSettings.username} = {
       isNormalUser = true;
       shell = pkgs.fish;
-      description = name;
+      description = userSettings.name;
       extraGroups = [ "networkmanager" "wheel" ];
       packages = with pkgs; [
         kdePackages.kate
@@ -114,7 +113,7 @@
 
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = username;
+    services.displayManager.autoLogin.user = userSettings.username;
 
     # Automatic updating
     system.autoUpgrade = {
