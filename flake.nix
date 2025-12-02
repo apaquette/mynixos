@@ -31,6 +31,7 @@
         # editor
 
         lib = nixpkgs.lib;
+        
         pkgs = nixpkgs.legacyPackages.${system};
     in {
         nixosConfigurations = {
@@ -50,7 +51,7 @@
             };
         };
         homeConfigurations = {
-            userSettings.username = home-manager.lib.homeManagerConfiguration {
+            ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ 
                     ./user/home.nix
