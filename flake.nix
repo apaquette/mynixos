@@ -11,7 +11,8 @@
     let
         # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
-        hostname = "nixos-desktop";
+        host = "desktop";
+        hostname = "nixos-${host}";
         # profile
         timezone = "America/Halifax";
         locale = "en_CA.UTF-8";
@@ -38,7 +39,7 @@
             nixos = lib.nixosSystem {
                 inherit system;
                 modules = [
-                    ./hosts/desktop/configuration.nix
+                    ./hosts/${host}/configuration.nix
                     ./modules/gaming.nix
                     ./modules/software.nix
                 ];
@@ -54,7 +55,7 @@
             ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ 
-                    ./user/apaquette/home.nix
+                    ./user/${userSettings.username}/home.nix
                 ];
                 extraSpecialArgs = {
                     inherit userSettings;
