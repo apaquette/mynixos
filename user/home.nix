@@ -35,6 +35,14 @@
     home-manager.enable = true;
     fish.enable = true;
     firefox.enable = true;
+    git = {
+      enable = true;
+      userName = userSettings.username;
+      userEmail = userSettings.email;
+      extraConfig = {
+        init.defaultBranch = "main";
+      };
+    };
   };
 
   # This value determines the Home Manager release that your configuration is
