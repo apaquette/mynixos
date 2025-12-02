@@ -11,7 +11,7 @@
     let
         # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
-        hostname = "nixos";
+        hostname = "nixos-desktop";
         # profile
         timezone = "America/Halifax";
         locale = "en_CA.UTF-8";
