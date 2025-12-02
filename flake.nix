@@ -38,9 +38,9 @@
             nixos = lib.nixosSystem {
                 inherit system;
                 modules = [
-                    ./configuration.nix
-                    ./gaming.nix
-                    ./software.nix
+                    ./hosts/desktop/configuration.nix
+                    ./modules/gaming.nix
+                    ./modules/software.nix
                 ];
                 specialArgs = {
                     inherit userSettings;
