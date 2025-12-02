@@ -25,9 +25,6 @@
   config = {
     # Enable Bluetooth
     hardware.bluetooth.enable = true;
-    
-    # Enable xone for Xbox wireless adapter
-    hardware.xone.enable = true;
 
     # Bootloader.
     boot.loader.efi.canTouchEfiVariables = true;
