@@ -36,12 +36,13 @@
         pkgs = nixpkgs.legacyPackages.${system};
     in {
         nixosConfigurations = {
-            nixos = lib.nixosSystem {
+            ${hostname} = lib.nixosSystem {
                 inherit system;
                 modules = [
                     ./hosts/${host}/configuration.nix
                     ./modules/gaming.nix
                     ./modules/software.nix
+                    ./modules/kdePlasma.nix
                 ];
                 specialArgs = {
                     inherit userSettings;
