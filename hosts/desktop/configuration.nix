@@ -19,6 +19,7 @@
     ./hardware-configuration.nix # Include the results of the hardware scan.
     ../../modules/gaming.nix
     ../../modules/software.nix
+    ../../modules/kdePlasma.nix
   ];
 
 
@@ -62,17 +63,6 @@
       variant = "";
     };
 
-    # Enable the KDE Plasma Desktop Environment.
-    #services.displayManager.sddm.enable = true;
-
-    services.displayManager.sddm = {
-      enable = true;
-    };
-
-    services.desktopManager.plasma6 = {
-      enable = true;
-    };
-
     # Enable CUPS to print documents.
     services.printing.enable = true;
 
@@ -101,9 +91,6 @@
       shell = pkgs.fish;
       description = userSettings.name;
       extraGroups = [ "networkmanager" "wheel" ];
-      packages = with pkgs; [
-        kdePackages.kate
-      ];
     };
 
     users.defaultUserShell = pkgs.fish;
@@ -128,7 +115,7 @@
     programs.firefox.enable = true;
 
     # Enable KDE Connect
-    programs.kdeconnect.enable = true;
+    # programs.kdeconnect.enable = true;
 
     # Git global configuration
     programs.git = {
