@@ -40,9 +40,7 @@
                 inherit system;
                 modules = [
                     ./hosts/${host}/configuration.nix
-                    ./modules/gaming.nix
-                    ./modules/software.nix
-                    ./modules/kdePlasma.nix
+                    ./hosts/${host}/imports.nix
                 ];
                 specialArgs = {
                     inherit userSettings;

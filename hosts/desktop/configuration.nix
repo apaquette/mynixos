@@ -14,15 +14,6 @@
 }: 
 
 {
-
-  imports = [
-    ./hardware-configuration.nix # Include the results of the hardware scan.
-    ../../modules/gaming.nix
-    ../../modules/software.nix
-    ../../modules/kdePlasma.nix
-  ];
-
-
   config = {
     # Enable Bluetooth
     hardware.bluetooth.enable = true;
@@ -105,24 +96,6 @@
       dates = "weekly";
     };
 
-    # Allow unfree packages
-    nixpkgs.config.allowUnfree = true;
-
-    # Enable FISH command shell
-    programs.fish.enable = true;
-
-    # Enable Firefox
-    programs.firefox.enable = true;
-
-    # Enable KDE Connect
-    # programs.kdeconnect.enable = true;
-
-    # Git global configuration
-    programs.git = {
-      enable = true;
-      config.init.defaultBranch = "main";
-    };
-
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
@@ -155,5 +128,4 @@
       "flakes"
     ];
   };
-
 }
