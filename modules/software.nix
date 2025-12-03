@@ -2,6 +2,7 @@
 
 {
     environment.systemPackages = with pkgs; [
+      kdePackages.kcalc # Calculator
       vlc
       flameshot # for screenshots
       obsidian
