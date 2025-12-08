@@ -8,7 +8,7 @@
 {
   imports = [
     ./vscode.nix
-    ./plasma/default.nix
+    #./plasma/default.nix
   ];
   
 
@@ -17,10 +17,13 @@
   home.packages = with pkgs; [
     spotify
     discord
-    whatsie
-    nil
+    #whatsie
+    whatsapp-electron
+    #nil
     kdePackages.kate
   ];
+
+  
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
