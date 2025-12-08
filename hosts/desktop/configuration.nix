@@ -94,6 +94,8 @@
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
 
+    
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.${userSettings.username} = {
       isNormalUser = true;
@@ -101,8 +103,6 @@
       description = userSettings.name;
       extraGroups = [ "networkmanager" "wheel" ];
     };
-
-    users.defaultUserShell = pkgs.fish;
 
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
@@ -119,6 +119,9 @@
       mdadm
     ];
 
+    environment.shells = with pkgs; [ fish ];
+    users.defaultUserShell = pkgs.fish;
+    programs.fish.enable = true;
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
