@@ -114,6 +114,12 @@
       dates = "weekly";
     };
 
+    environment.systemPackages = with pkgs; [
+      pciutils
+      mdadm
+    ];
+
+
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
