@@ -1,42 +1,39 @@
 { ... }:
 {
-  imports = [<plasma-manager/modules>];
-
   programs.plasma = {
     enable = true;
 
     # NumLock by default
     input.keyboard.numlockOnStartup = "on";
-    
-    kscreenlockerrc.Daemon.Autolock = false;
-    kscreenlockerrc.Daemon.Timeout = 0;
-    kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".Image = "Illium.jpg";
-    kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".PreviewImage = "Illium.jpg";
 
     krunner.position = "center";
 
     configFile = {
+      kscreenlockerrc.Daemon.Autolock = false;
+      kscreenlockerrc.Daemon.Timeout = 0;
+
+      kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".Image = "Illium.jpg";
+      kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".PreviewImage = "Illium.jpg";
+
       kcminputrc.Mouse.cursorSize = 18;
       kcminputrc.Mouse.cursorTheme = "Breeze_Light";
 
       kdeglobals.Icons.Theme = "YAMIS";
       kdeglobals.KDE.widgetStyle = "Breeze";
 
-      kwinrc.Desktops.Name_1 = "Home";
-      kwinrc.Desktops.Name_2 = "Dev";
 
-      # KDE Wallet
-      kwalletrc.Wallet."Close When Idle" = false;
-      kwalletrc.Wallet."Close on Screensaver" = false;
-      kwalletrc.Wallet.Enabled = true;
-      kwalletrc.Wallet."First Use" = false;
-      kwalletrc.Wallet."Idle Timeout" = 10;
-      kwalletrc.Wallet."Launch Manager" = false;
-      kwalletrc.Wallet."Leave Manager Open" = false;
-      kwalletrc.Wallet."Leave Open" = true;
-      kwalletrc.Wallet."Prompt on Open" = false;
-      kwalletrc.Wallet."Use One Wallet" = true;
-      kwalletrc."org.freedesktop.secrets".apiEnabled = true;
+    #   # KDE Wallet
+    #   kwalletrc.Wallet."Close When Idle" = false;
+    #   kwalletrc.Wallet."Close on Screensaver" = false;
+    #   kwalletrc.Wallet.Enabled = true;
+    #   kwalletrc.Wallet."First Use" = false;
+    #   kwalletrc.Wallet."Idle Timeout" = 10;
+    #   kwalletrc.Wallet."Launch Manager" = false;
+    #   kwalletrc.Wallet."Leave Manager Open" = false;
+    #   kwalletrc.Wallet."Leave Open" = true;
+    #   kwalletrc.Wallet."Prompt on Open" = false;
+    #   kwalletrc.Wallet."Use One Wallet" = true;
+    #   kwalletrc."org.freedesktop.secrets".apiEnabled = true;
       
       # KWINRC
       kwinrc.Effect-overview.BorderActivate = 3;
@@ -52,8 +49,8 @@
 
       plasma-localerc.Formats.LANG = "en_CA.UTF-8";
 
-      plasmarc.Theme.name = "JuxPlasma";
-      plasmarc.Wallpapers.usersWallpapers = "Wallpaper.png";
+       plasmarc.Theme.name = "JuxPlasma";
+       plasmarc.Wallpapers.usersWallpapers = "Wallpaper.png";
+     };
     };
-  };
-}
+  }
