@@ -5,9 +5,13 @@
         nixpkgs.url = "nixpkgs/nixos-25.05";
         home-manager.url = "github:nix-community/home-manager/release-25.05";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+        plasma-manager.url = "github:nix-community/plasma-manager";
+        plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+        plasma-manager.inputs.home-manager.follows = "home-manager";
     };
 
-    outputs = {self, nixpkgs, home-manager, ...}: 
+    outputs = inputs@{nixpkgs, home-manager, plasma-manager, ...}: 
     let
         # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
@@ -42,6 +46,7 @@
                     ./hosts/${host}/configuration.nix
                     ./hosts/${host}/imports.nix
                 ];
+
                 specialArgs = {
                     inherit userSettings;
                     inherit hostname;
@@ -54,6 +59,7 @@
             ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ 
+                    inputs.plasma-manager.homeModules.plasma-manager
                     ./user/${userSettings.username}/home.nix
                 ];
                 extraSpecialArgs = {
