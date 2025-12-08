@@ -2,8 +2,8 @@
     description = "Flake of Alex Paquette";
 
     inputs = { 
-        nixpkgs.url = "nixpkgs/nixos-25.05";
-        home-manager.url = "github:nix-community/home-manager/release-25.05";
+        nixpkgs.url = "nixpkgs/nixos-25.11";
+        home-manager.url = "github:nix-community/home-manager/release-25.11";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
         plasma-manager.url = "github:nix-community/plasma-manager";
