@@ -8,5 +8,6 @@
     ../../modules/gaming.nix
     ../../modules/software.nix
     ../../modules/kde.nix
+    ../../modules/settings.nix
   ];
 }
