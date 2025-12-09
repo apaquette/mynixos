@@ -17,10 +17,10 @@
   home.packages = with pkgs; [
     spotify
     discord
-    #whatsie
     whatsapp-electron
     #nil
     kdePackages.kate
+    zoom-us
   ];
 
   
@@ -36,11 +36,15 @@
     home-manager.enable = true;
     fish.enable = true;
     firefox.enable = true;
+    
+    # git configurations
     git = {
       enable = true;
-      userName = userSettings.username;
-      userEmail = userSettings.email;
-      extraConfig = {
+      settings = {
+        user = {
+          name = userSettings.name;
+          email = userSettings.email;
+        };
         init.defaultBranch = "main";
       };
     };
