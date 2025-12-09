@@ -15,7 +15,7 @@
     let
         # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
-        host = "desktop";
+        host = "thinkpad";
         hostname = "nixos-${host}";
         # profile
         timezone = "America/Halifax";
