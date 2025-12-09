@@ -17,6 +17,9 @@
   programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
+    pciutils
+    mdadm
+    
     kdePackages.kcalc # Calculator
     vlc
     flameshot # for screenshots
