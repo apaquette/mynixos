@@ -17,13 +17,11 @@
   home.packages = with pkgs; [
     spotify
     discord
-    #whatsie
     whatsapp-electron
     #nil
     kdePackages.kate
+    zoom-us
   ];
-
-  
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -36,11 +34,15 @@
     home-manager.enable = true;
     fish.enable = true;
     firefox.enable = true;
+    
+    # git configurations
     git = {
       enable = true;
-      userName = userSettings.username;
-      userEmail = userSettings.email;
-      extraConfig = {
+      settings = {
+        user = {
+          name = userSettings.name;
+          email = userSettings.email;
+        };
         init.defaultBranch = "main";
       };
     };
