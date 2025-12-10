@@ -1,7 +1,7 @@
 { 
   pkgs,
   userSettings,
-  hostname,
+  host,
   timezone,
   locale,
   ... 
@@ -11,7 +11,7 @@
   # Enable Bluetooth
     hardware.bluetooth.enable = true;
 
-    networking.hostName = hostname; # Define your hostname.
+    networking.hostName = host; # Define your hostname.
     #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary

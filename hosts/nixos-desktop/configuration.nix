@@ -3,9 +3,6 @@
   pkgs,
   lib,
   userSettings,
-  hostname,
-  timezone,
-  locale,
   ...
 }: 
 

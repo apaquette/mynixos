@@ -15,11 +15,15 @@
     let
         # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
-        host = "thinkpad";
-        hostname = "nixos-${host}";
         # profile
         timezone = "America/Halifax";
         locale = "en_CA.UTF-8";
+
+        hosts = builtins.filter (x: x != null) (
+            lib.mapAttrsToList(name: value: if (value == "directory") then name else null)(
+                builtins.readDir ./hosts
+            )
+        );
 
 
         # ----------- USER SETTINGS ----------- #
@@ -39,32 +43,35 @@
         
         pkgs = nixpkgs.legacyPackages.${system};
     in {
-        nixosConfigurations = {
-            ${hostname} = lib.nixosSystem {
-                inherit system;
-                modules = [
-                    ./hosts/${host}/configuration.nix
-                    ./hosts/${host}/imports.nix
-                ];
+        nixosConfigurations = builtins.listToAttrs (
+            map (host: {
+                name = host;
+                value = lib.nixosSystem {
+                    inherit system;
+                    modules = [
+                        ./hosts/${host}/configuration.nix
+                        ./hosts/${host}/imports.nix
+                    ];
 
-                specialArgs = {
-                    inherit userSettings;
-                    inherit hostname;
-                    inherit timezone;
-                    inherit locale;
+                    specialArgs = {
+                        inherit userSettings;
+                        inherit host;
+                        inherit timezone;
+                        inherit locale;
+                    };
                 };
-            };
-        };
+            }) hosts
+        );
+
         homeConfigurations = {
             ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ 
                     inputs.plasma-manager.homeModules.plasma-manager
-                    ./user/${userSettings.username}/home.nix
+                    ./users/${userSettings.username}/home.nix
                 ];
                 extraSpecialArgs = {
                     inherit userSettings;
-                    inherit hostname;
                 };
             };
         };
