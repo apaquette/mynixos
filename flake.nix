@@ -69,6 +69,7 @@
                 modules = [ 
                     inputs.plasma-manager.homeModules.plasma-manager
                     ./users/${userSettings.username}/home.nix
+                    ./users/${userSettings.username}/imports.nix
                 ];
                 extraSpecialArgs = {
                     inherit userSettings;
