@@ -1,6 +1,6 @@
 # mynixos
 
-This repository contains my personal NixOS configuration, developed as part of my transition from Windows 11 to a fully devlarative Linux environment. The project reflects my efforts to learn, apply, and maintain Nix, NixOS, and Home Manager in a modular and scalable way.
+This repository contains my personal NixOS configuration, developed as part of my transition from Windows 11 to a fully declarative Linux environment. The project reflects my efforts to learn, apply, and maintain Nix, NixOS, and Home Manager in a modular and scalable way.
 
 ## Overview
 The configuration is built on the following goals:
