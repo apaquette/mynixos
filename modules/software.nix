@@ -20,17 +20,20 @@
     pciutils
     mdadm
     
+    # KDE Packages
     kdePackages.kcalc # Calculator
+    kdePackages.ktorrent
+    kdePackages.kamoso #webcam app
+
     vlc
     flameshot # for screenshots
     obsidian
-    webcamoid
-    qbittorrent
     zip
     #LibreOffice
-      libreoffice-qt6-fresh
-      hunspell
-      hunspellDicts.en_CA
+      # libreoffice-qt6-fresh
+      # hunspell
+      # hunspellDicts.en_CA
+    # Only Office
+    onlyoffice-desktopeditors
   ];
-
 }
