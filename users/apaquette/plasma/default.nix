@@ -9,17 +9,17 @@
     krunner.position = "center";
 
     configFile = {
-      kscreenlockerrc.Daemon.Autolock = false;
-      kscreenlockerrc.Daemon.Timeout = 0;
+      # kscreenlockerrc.Daemon.Autolock = false;
+      # kscreenlockerrc.Daemon.Timeout = 0;
 
-      kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".Image = "Illium.jpg";
-      kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".PreviewImage = "Illium.jpg";
+      # kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".Image = "Illium.jpg";
+      # kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".PreviewImage = "Illium.jpg";
 
-      kcminputrc.Mouse.cursorSize = 18;
-      kcminputrc.Mouse.cursorTheme = "Breeze_Light";
+      #kcminputrc.Mouse.cursorSize = 18;
+      #kcminputrc.Mouse.cursorTheme = "Breeze_Light";
 
-      kdeglobals.Icons.Theme = "YAMIS";
-      kdeglobals.KDE.widgetStyle = "Breeze";
+      #kdeglobals.Icons.Theme = "YAMIS";
+      #kdeglobals.KDE.widgetStyle = "Breeze";
 
 
     #   # KDE Wallet
@@ -36,21 +36,21 @@
     #   kwalletrc."org.freedesktop.secrets".apiEnabled = true;
       
       # KWINRC
-      kwinrc.Effect-overview.BorderActivate = 3;
-      kwinrc.Plugins.desktopchangeosdEnabled = false;
-      kwinrc.Plugins.krohnkiteEnabled = false;
-      kwinrc.Tiling.padding = 4;
-      kwinrc."Tiling/0c949489-e31b-56a4-ba24-9cff9e6cd932".tiles = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.25},{\"width\":0.5},{\"width\":0.25}]}";
-      kwinrc.Windows.RollOverDesktops = true;
-      kwinrc.Xwayland.Scale = 1.3;
-      kwinrc."org.kde.kdecoration2".BorderSize = "None";
-      kwinrc."org.kde.kdecoration2".BorderSizeAuto = false;
-      kwinrc."org.kde.kdecoration2".theme = "Breeze";
+      # kwinrc.Effect-overview.BorderActivate = 3;
+      # kwinrc.Plugins.desktopchangeosdEnabled = false;
+      # kwinrc.Plugins.krohnkiteEnabled = false;
+      # kwinrc.Tiling.padding = 4;
+      # kwinrc."Tiling/0c949489-e31b-56a4-ba24-9cff9e6cd932".tiles = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.25},{\"width\":0.5},{\"width\":0.25}]}";
+      # kwinrc.Windows.RollOverDesktops = true;
+      # kwinrc.Xwayland.Scale = 1.3;
+      # kwinrc."org.kde.kdecoration2".BorderSize = "None";
+      # kwinrc."org.kde.kdecoration2".BorderSizeAuto = false;
+      # kwinrc."org.kde.kdecoration2".theme = "Breeze";
 
-      plasma-localerc.Formats.LANG = "en_CA.UTF-8";
+      #plasma-localerc.Formats.LANG = "en_CA.UTF-8";
 
-       plasmarc.Theme.name = "JuxPlasma";
-       plasmarc.Wallpapers.usersWallpapers = "Wallpaper.png";
+      #  plasmarc.Theme.name = "JuxPlasma";
+      #  plasmarc.Wallpapers.usersWallpapers = "Wallpaper.png";
      };
     };
   }

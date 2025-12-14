@@ -6,6 +6,6 @@
 }: {
   imports = [
     ./vscode.nix
-    #./plasma/default.nix
+    ./plasma/default.nix
   ];
 }
