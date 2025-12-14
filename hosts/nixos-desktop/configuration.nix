@@ -4,21 +4,23 @@
   lib,
   userSettings,
   ...
-}: 
-
+}:
 {
   config = {
     # Bootloader.
+    # boot.loader.efi.canTouchEfiVariables = true;
+    # boot.loader.efi.efiSysMountPoint = "/boot";
+    boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.efi.efiSysMountPoint = "/boot/efi";
-    boot.loader.grub.efiSupport = true;
-    boot.loader.grub.device = "nodev";
-    boot.loader.grub.useOSProber = true;
+
+    # boot.loader.grub.enable = true;
+    # boot.loader.grub.efiSupport = true;
+    # boot.loader.grub.device = "nodev";
+    # boot.loader.grub.useOSProber = true;
 
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = userSettings.username;
-
     
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
@@ -28,9 +30,6 @@
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "25.11"; # Did you read the comment?
 
-    nix.settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
   };
 }
