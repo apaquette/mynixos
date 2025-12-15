@@ -10,11 +10,4 @@
     fsType = "ext4";
     options = [ "nofail" ];
   };
-
-  # Mount backup drive
-  fileSystems."/mnt/backup" = { 
-    device = "/dev/disk/by-uuid/D8161297161276AA";
-    fsType = "ntfs";
-    options = [ "nofail" ];
-  };
 }
