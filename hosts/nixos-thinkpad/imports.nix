@@ -8,5 +8,6 @@
     ../../modules/software.nix
     ../../modules/kde.nix
     ../../modules/settings.nix
+    ../../modules/syncthing.nix
   ];
 }
