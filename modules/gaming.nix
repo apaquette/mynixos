@@ -13,7 +13,13 @@
     extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
 
-  environment.systemPackages = [
-    pkgs.heroic
+  environment.systemPackages = with pkgs; [
+    heroic
+
+    # Emulators
+    dolphin-emu # Gamecube/Wii
+    xemu # original xbox
+    xenia-canary #xbox 360
+    rpcs3 #ps3
   ];
 }

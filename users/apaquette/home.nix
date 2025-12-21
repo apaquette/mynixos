@@ -12,9 +12,10 @@
     spotify
     discord
     whatsapp-electron
-    #nil
     kdePackages.kate
     zoom-us
+    jellyfin-rpc
+    syncthing
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
