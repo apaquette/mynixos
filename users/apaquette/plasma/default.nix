@@ -1,56 +1,137 @@
-{ ... }:
+{ 
+  userSettings,
+  ... 
+}:
+let
+defaultFont = { family = "Noto Sans"; pointSize = 10; };
+in
 {
+  # Konsole configuration
+  programs.konsole = {
+    enable = true;
+    # profiles = {
+
+    # };
+    # defaultProfile = ""
+  };
+
+  # Plasma Desktop
   programs.plasma = {
     enable = true;
 
-    # NumLock by default
+    # Input & Output
+    # Keyboard
     input.keyboard.numlockOnStartup = "on";
 
-    krunner.position = "center";
 
-    configFile = {
-      # kscreenlockerrc.Daemon.Autolock = false;
-      # kscreenlockerrc.Daemon.Timeout = 0;
+    # Appearance and Style
+    # Wallpapaer
 
-      # kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".Image = "Illium.jpg";
-      # kscreenlockerrc."Greeter/Wallpaper/org.kde.image/General".PreviewImage = "Illium.jpg";
-
-      #kcminputrc.Mouse.cursorSize = 18;
-      #kcminputrc.Mouse.cursorTheme = "Breeze_Light";
-
-      #kdeglobals.Icons.Theme = "YAMIS";
-      #kdeglobals.KDE.widgetStyle = "Breeze";
-
-
-    #   # KDE Wallet
-    #   kwalletrc.Wallet."Close When Idle" = false;
-    #   kwalletrc.Wallet."Close on Screensaver" = false;
-    #   kwalletrc.Wallet.Enabled = true;
-    #   kwalletrc.Wallet."First Use" = false;
-    #   kwalletrc.Wallet."Idle Timeout" = 10;
-    #   kwalletrc.Wallet."Launch Manager" = false;
-    #   kwalletrc.Wallet."Leave Manager Open" = false;
-    #   kwalletrc.Wallet."Leave Open" = true;
-    #   kwalletrc.Wallet."Prompt on Open" = false;
-    #   kwalletrc.Wallet."Use One Wallet" = true;
-    #   kwalletrc."org.freedesktop.secrets".apiEnabled = true;
-      
-      # KWINRC
-      # kwinrc.Effect-overview.BorderActivate = 3;
-      # kwinrc.Plugins.desktopchangeosdEnabled = false;
-      # kwinrc.Plugins.krohnkiteEnabled = false;
-      # kwinrc.Tiling.padding = 4;
-      # kwinrc."Tiling/0c949489-e31b-56a4-ba24-9cff9e6cd932".tiles = "{\"layoutDirection\":\"horizontal\",\"tiles\":[{\"width\":0.25},{\"width\":0.5},{\"width\":0.25}]}";
-      # kwinrc.Windows.RollOverDesktops = true;
-      # kwinrc.Xwayland.Scale = 1.3;
-      # kwinrc."org.kde.kdecoration2".BorderSize = "None";
-      # kwinrc."org.kde.kdecoration2".BorderSizeAuto = false;
-      # kwinrc."org.kde.kdecoration2".theme = "Breeze";
-
-      #plasma-localerc.Formats.LANG = "en_CA.UTF-8";
-
-      #  plasmarc.Theme.name = "JuxPlasma";
-      #  plasmarc.Wallpapers.usersWallpapers = "Wallpaper.png";
-     };
+    #Animations
+    kwin.effects = {
+      desktopSwitching.animation = "slide";
+      desktopSwitching.navigationWrapping = true;
+      shakeCursor.enable = false;
+      windowOpenClose.animation = "scale";
     };
-  }
+
+    # Text & Fonts
+    fonts = {
+      general = defaultFont;
+      fixedWidth = {
+        family = "Hack";
+        pointSize = defaultFont.pointSize;
+      };
+      small = {
+        family = defaultFont.family;
+        pointSize = 8;
+      };
+      toolbar = defaultFont;
+      menu = defaultFont;
+      windowTitle = defaultFont;
+    };
+
+    # Apps & Windows
+
+    # Window Management
+    kwin.virtualDesktops.names = [
+      "Home"
+      "Nix Configs"
+      "Job Search"
+      "Dev"
+    ];
+    kwin.virtualDesktops.number = 4;
+
+    # Need to figure out how to create an apply Window Rules
+    # window-rules = [
+    #   {
+
+    #     apply = true;
+    #   }
+    # ];
+
+    panels = [
+      {
+        location = "top";
+        height = 20;
+        alignment = "center";
+        hiding = "none";
+        lengthMode = "fill";
+        opacity = "adaptive";
+        widgets = [
+          "org.kde.plasma.globalmenu"
+          "org.kde.plasma.panelspacer"
+          "org.kde.plasma.systemtray"
+          "org.kde.plasma.digitalclock"
+          "luisbocanegra.panel.colorizer"
+        ];
+      }
+      {
+        location = "right";
+        height = 60;
+        alignment = "center";
+        hiding = "autohide";
+        lengthMode = "fit";
+        opacity = "adaptive";
+        widgets = [
+          "org.kde.plasma.icontasks"
+        ];
+      }
+    ];
+
+    # Security & Privacy
+    # Screen Locker
+    kscreenlocker = {
+      appearance = {
+        showMediaControls = true;
+        alwaysShowClock = true;
+        # setting the wallpaper for the lock screen isn't working :(
+        wallpaper = "/home/${userSettings.username}/.dotfiles/users/${userSettings.username}/plasma/Wallpaper.png;";
+      };
+    };
+
+
+    workspace = {
+      cursor = {
+        animationTime = 5;
+        cursorFeedback = "Bouncing";
+        size = 18;
+        taskManagerFeedback = true;
+        theme = "Breeze_Light";
+      };
+      #how to use a custom icon set?
+      # icons = "";
+      lookAndFeel = "org.kde.breezedark.desktop";
+      theme = "breeze-dark";
+      wallpaper = "/home/${userSettings.username}/.dotfiles/users/${userSettings.username}/plasma/Wallpaper.png";
+    };
+  
+    # KRunner
+    krunner = {
+      activateWhenTypingOnDesktop = true;
+      position = "center";
+      historyBehavior = "enableSuggestions";
+      shortcuts.launch = "Meta";
+    };
+    };
+}
