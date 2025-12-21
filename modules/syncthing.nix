@@ -1,15 +1,16 @@
 {
+  userSettings,
   ...
 }:
 {
   services.syncthing = {
     enable = true;
 
-    user = "apaquette";
+    user = "${userSettings.username}";
     group = "users";
 
-    dataDir = "/home/apaquette";
-    configDir = "/home/apaquette/.config/syncthing";
+    dataDir = "/home/${userSettings.username}";
+    configDir = "/home/${userSettings.username}/.config/syncthing";
 
     openDefaultPorts = true;
 
