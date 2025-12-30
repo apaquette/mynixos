@@ -21,5 +21,8 @@
     xemu # original xbox
     xenia-canary #xbox 360
     rpcs3 #ps3
+
+    #Minecraft
+    prismlauncher
   ];
 }
