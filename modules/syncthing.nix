@@ -14,12 +14,11 @@
 
     openDefaultPorts = true;
 
-    settings = {
-      options = {
-        localAnnounceEnabled = true;
-        relaysEnabled = true;
-        natEnabled = true;
-      };
+    settings.options = {
+      urAccepted = -1;
+      localAnnounceEnabled = true;
+      relaysEnabled = true;
+      natEnabled = true;
     };
   };
 }
