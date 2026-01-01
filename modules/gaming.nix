@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   # Enable xone for Xbox wireless adapter
   hardware.xone.enable = true;
@@ -15,14 +14,11 @@
 
   environment.systemPackages = with pkgs; [
     heroic
+    prismlauncher #Minecraft
 
     # Emulators
     dolphin-emu # Gamecube/Wii
-    xemu # original xbox
     xenia-canary #xbox 360
     rpcs3 #ps3
-
-    #Minecraft
-    prismlauncher
   ];
 }
