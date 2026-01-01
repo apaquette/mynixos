@@ -6,6 +6,8 @@
 
   # Enable FISH command shell
   programs.fish.enable = true;
+
+  services.flatpak.enable = true;
   
   # Git global configuration
   programs.git = {
@@ -29,11 +31,6 @@
     flameshot # for screenshots
     obsidian
     zip
-    #LibreOffice
-      # libreoffice-qt6-fresh
-      # hunspell
-      # hunspellDicts.en_CA
-    # Only Office
     onlyoffice-desktopeditors
   ];
 }
