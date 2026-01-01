@@ -18,4 +18,6 @@
       kdePackages.kate
     ];
   };
+
+  xdg.portal.enable = true;
 }
