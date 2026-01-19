@@ -25,6 +25,12 @@
             )
         );
 
+        # ----------- SYNCTHING ARGS ----------- #
+        syncthingArgs = {
+            desktop.id = "U5RZCCK-IFQB4GH-XR2FAOW-VW3ZGJK-3FEJHZL-B7Z3SP5-LNU2FVE-7T2ERQA";
+            laptop.id = "ECCP6YE-XZZ4IE2-MXIXDGT-WLSGHKR-S3RM6PP-6JDWWW6-EXPDBTC-XFT4OQL";
+        };
+
 
         # ----------- USER SETTINGS ----------- #
         userSettings = {
@@ -58,6 +64,7 @@
                         inherit host;
                         inherit timezone;
                         inherit locale;
+                        inherit syncthingArgs;
                     };
                 };
             }) hosts
