@@ -13,10 +13,12 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    # boot.loader.grub.enable = true;
-    # boot.loader.grub.efiSupport = true;
-    # boot.loader.grub.device = "nodev";
-    # boot.loader.grub.useOSProber = true;
+    # Dual-boot config
+    # boot.loader.grub = {
+    #   enable = true;
+    #   device = "nodev";
+    #   useOSProber = true;
+    # };
 
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
