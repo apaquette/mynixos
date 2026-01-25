@@ -24,10 +24,10 @@ Both systems import from a shared library of modules containing common packages,
 Home Manager is integrated directly through the flake, ensuring that system-level and user-level configuration remain consistent and reproducible. User environments, dotfiles, and program settings are fully declared in Nix code.
 
 ### Repository Structure
-- hosts/ contains device-specific system configurations.
-- modules/ contains shared modules that can be imported by hosts.
-- users/ contains Home Manager user configurations and modules.
-- flake.nix declares inputs, outputs, and host definitions.
+- `hosts/` contains device-specific system configurations.
+- `modules/` contains shared modules that can be imported by hosts.
+- `users/` contains Home Manager user configurations and modules.
+- `flake.nix` declares inputs, outputs, and host definitions.
 
 ## Learning Outcomes
 Through this project, I developed hands-on experience with:
