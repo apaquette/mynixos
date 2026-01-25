@@ -7,13 +7,13 @@ The configuration is built on the following goals:
 - Full declarative system management using NixOS, flakes, and Home Manager.
 - Modularity and reusability, allowing components to be composted, extended, or overriden easily.
 - Multi-host support, enabling different machines to share common modules while still having device-specific configuration.
-- Practical, maintainable structure that supports long-term extensibility and version control.
+- Practical, maintainable structure that supports long-term extensibility.
 
 ## Features
 ### Modular Architecture
 The repsitory is organized around a module-based structure. System and user configurations are split into logical components such as settings, software, and gaming to name a few. This allows each host to selectively import only what it needs, maintaining clarity and avoiding duplications.
 
-### Multi-Host SUpport
+### Multi-Host Support
 The project currently defines configurations for:
 - nixos-desktop
 - nixos-thinkpad
@@ -36,6 +36,5 @@ Through this project, I developed hands-on experience with:
 - Home Manager for user-level configuration
 - Modular configuration engineering
 - Managing multi-host systems under a single repository
-- Versioning and maintainability best practices for NixOS deployments
 
 This repository continues to evolve as I refine my setup, add new modules, and deepen my knowledge with Nix and NixOS.
