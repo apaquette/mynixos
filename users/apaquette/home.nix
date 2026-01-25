@@ -16,6 +16,7 @@
     zoom-us
     jellyfin-rpc
     anki
+    obs-studio
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
