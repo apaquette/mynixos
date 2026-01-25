@@ -3,7 +3,7 @@
   # Enable xone for Xbox wireless adapter
   hardware.xone.enable = true;
   
-  # Enable steam
+  # Enable Steam
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -13,12 +13,12 @@
   };
 
   environment.systemPackages = with pkgs; [
-    heroic
-    prismlauncher #Minecraft
+    heroic # Epic Games, GOG
+    prismlauncher # Minecraft
 
     # Emulators
     dolphin-emu # Gamecube/Wii
-    xenia-canary #xbox 360
-    rpcs3 #ps3
+    xenia-canary # Xbox 360
+    rpcs3 # PS3
   ];
 }
