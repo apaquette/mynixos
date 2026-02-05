@@ -20,5 +20,6 @@
     dolphin-emu # Gamecube/Wii
     xenia-canary # Xbox 360
     rpcs3 # PS3
+    steam-rom-manager # add emulator games to steam
   ];
 }
