@@ -13,10 +13,10 @@
     discord
     whatsapp-electron
     kdePackages.kate
-    zoom-us
     jellyfin-rpc
     anki
     obs-studio
+    gdevelop
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
