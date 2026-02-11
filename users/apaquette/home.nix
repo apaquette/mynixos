@@ -17,6 +17,9 @@
     anki
     obs-studio
     gdevelop
+    unrar
+    drawio
+    inkscape
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
