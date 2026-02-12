@@ -64,15 +64,7 @@
     users.defaultUserShell = pkgs.fish;
     programs.fish.enable = true;
 
-    services.xserver = {
-      enable = true;
-
-      xkb = {
-        layout = "us";
-        variant = "colemak";
-        options = "caps:backspace";
-      };
-    };
+    
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
