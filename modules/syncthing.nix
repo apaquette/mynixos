@@ -10,7 +10,6 @@ let
     "Documents"
     "Pictures"
     "Music"
-    "Downloads"
     "Videos"
   ];
 
