@@ -20,6 +20,16 @@
     #   useOSProber = true;
     # };
 
+    services.xserver = {
+      enable = true;
+
+      xkb = {
+        layout = "us";
+        variant = "colemak";
+        options = "caps:backspace";
+      };
+    };
+
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = userSettings.username;
