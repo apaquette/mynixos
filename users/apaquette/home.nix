@@ -20,6 +20,8 @@
     unrar
     drawio
     inkscape
+    godot-mono
+    github-desktop
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
