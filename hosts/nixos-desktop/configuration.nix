@@ -30,6 +30,9 @@
       };
     };
 
+    networking.networkmanager.wifi.powersave = false;
+    networking.enableIPv6 = false;
+
     # Enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = userSettings.username;
