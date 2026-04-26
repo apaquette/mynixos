@@ -29,9 +29,10 @@
     kdePackages.kamoso #webcam app
 
     vlc
-    flameshot # for screenshots
     obsidian
     zip
     onlyoffice-desktopeditors
+
+    iw
   ];
 }
