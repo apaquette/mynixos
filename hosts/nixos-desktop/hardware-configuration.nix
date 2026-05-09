@@ -24,10 +24,9 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/srv" =
+  fileSystems."/mnt/nomad" =
     { device = "/dev/disk/by-uuid/4d230e9c-fefb-48b8-a450-541cf7fc571b";
       fsType = "ext4";
-      
       neededForBoot = false;
     };
 
