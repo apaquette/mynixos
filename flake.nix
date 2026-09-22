@@ -39,15 +39,13 @@
             email = "alexandre.d.paquette@gmail.com";
             dotfilesDir = "~/.dotfiles";
         };
-        # theme
-        # windowManager
-        # windowManagerType
-        # browser
-        # editor
 
         lib = nixpkgs.lib;
         
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+        };
     in {
         nixosConfigurations = builtins.listToAttrs (
             map (host: {

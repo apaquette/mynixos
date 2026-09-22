@@ -2,7 +2,12 @@
 
 {
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "electron-39.8.10"
+    ];
+  };
 
   # Enable FISH command shell
   programs.fish.enable = true;

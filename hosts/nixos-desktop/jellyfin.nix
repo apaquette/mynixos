@@ -4,6 +4,14 @@
   ...
 }:
 {
+  users.groups.media = {
+    gid = 1000;
+  };
+  users.users.${userSettings.username}.extraGroups = [ "media" ];
+  users.users.qbittorrent.extraGroups = [ "media" ];
+  users.users.radarr.extraGroups = [ "media" ];
+  users.users.sonarr.extraGroups = [ "media" ];
+
   environment.systemPackages = with pkgs; [
     jellyfin
     jellyfin-web

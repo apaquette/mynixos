@@ -24,15 +24,17 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/mnt/nomad" =
-    { device = "/dev/disk/by-uuid/4d230e9c-fefb-48b8-a450-541cf7fc571b";
-      fsType = "ext4";
-      neededForBoot = false;
-    };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/42139c32-68bd-4e25-b217-e32f14509eaf"; }
     ];
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      vulkan-validation-layers
+    ];
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

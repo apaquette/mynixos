@@ -16,11 +16,9 @@
     jellyfin-rpc
     anki
     obs-studio
-    gdevelop
     unrar
     drawio
     inkscape
-    godot-mono
     github-desktop
   ];
 
