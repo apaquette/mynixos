@@ -22,7 +22,19 @@
   };
 
   # Enable Firefox
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    policies = {
+      Certificates = {
+        ImportEnterpriseRoots = true;
+      };
+    };
+  };
+
+  # Trust the Caddy local CA
+  security.pki.certificateFiles = [
+    ../certs/caddy-local-root.crt
+  ];
 
   environment.systemPackages = with pkgs; [
     pciutils
@@ -37,6 +49,7 @@
     obsidian
     zip
     onlyoffice-desktopeditors
+    nextcloud-client
 
     iw
   ];

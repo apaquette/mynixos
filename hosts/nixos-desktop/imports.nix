@@ -6,10 +6,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./raid.nix
-    ./backup.nix
-    ./jellyfin.nix
-    ./minecraft-server.nix
     ../../modules/gaming.nix
     ../../modules/software.nix
     ../../modules/kde.nix
