@@ -6,6 +6,8 @@
         home-manager.url = "github:nix-community/home-manager/release-25.11";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+        nix-flatpak.url = "github:gmodena/nix-flatpak";
+
         plasma-manager.url = "github:nix-community/plasma-manager";
         plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
         plasma-manager.inputs.home-manager.follows = "home-manager";
@@ -72,6 +74,7 @@
             ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ 
+                    inputs.nix-flatpak.homeManagerModules.nix-flatpak
                     inputs.plasma-manager.homeModules.plasma-manager
                     ./users/${userSettings.username}/home.nix
                     ./users/${userSettings.username}/imports.nix

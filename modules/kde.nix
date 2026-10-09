@@ -16,7 +16,12 @@
   users.users.${userSettings.username} = {
     packages = with pkgs; [
       kdePackages.kate
+      kdePackages.kwalletmanager
     ];
+  };
+
+  security.pam.services.login.kwallet = {
+    enable = true;
   };
 
   xdg.portal.enable = true;

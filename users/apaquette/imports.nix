@@ -3,6 +3,7 @@
 }: {
   imports = [
     ./vscode.nix
-    #./plasma/default.nix
+    ./nextcloud.nix
+    ./flatpaks.nix
   ];
 }
