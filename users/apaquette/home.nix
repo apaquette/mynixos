@@ -13,6 +13,7 @@
     discord
     whatsapp-electron
     kdePackages.kate
+    kdePackages.kwalletmanager
     jellyfin-rpc
     anki
     obs-studio

@@ -65,6 +65,8 @@ in
       (desktopConfig.programs.kdeconnect.enable)
       (thinkpadConfig.xdg.portal.enable)
       (desktopConfig.xdg.portal.enable)
+      (!(builtins.elem pkgs.kdePackages.kate
+        desktopConfig.users.users.apaquette.packages))
     ]
   );
 
@@ -84,6 +86,8 @@ in
     (desktopConfig.hardware.xone.enable)
     (desktopConfig.services.displayManager.autoLogin.enable)
     (desktopConfig.services.displayManager.autoLogin.user == "apaquette")
+    (!(builtins.elem pkgs.kdePackages.kate
+        desktopConfig.users.users.apaquette.packages))
   ];
 
   thinkpad = mkCheck "thinkpad" [
@@ -108,5 +112,7 @@ in
     (builtins.hasAttr "nextcloud-client" homeConfig.systemd.user.services)
     (homeConfig.programs.git.settings.user.name == "Alex Paquette")
     (homeConfig.programs.git.settings.user.email == "alexandre.d.paquette@gmail.com")
+    (builtins.elem pkgs.kdePackages.kate homeConfig.home.packages)
+    (builtins.elem pkgs.kdePackages.kwalletmanager homeConfig.home.packages)
   ];
 }

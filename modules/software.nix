@@ -9,9 +9,6 @@
     ];
   };
 
-  # Enable FISH command shell
-  programs.fish.enable = true;
-
   services.flatpak.enable = true;
   
   # Git global configuration
