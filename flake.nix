@@ -13,7 +13,7 @@
         plasma-manager.inputs.home-manager.follows = "home-manager";
     };
 
-    outputs = inputs@{nixpkgs, home-manager, plasma-manager, ...}: 
+    outputs = inputs@{self, nixpkgs, home-manager, plasma-manager, ...}:
     let
         # ----------- SYSTEM  SETTINGS ----------- #
         system = "x86_64-linux";
@@ -75,6 +75,11 @@
                     inherit userSettings;
                 };
             };
+        };
+        checks.${system} = import ./tests/checks.nix {
+            inherit pkgs;
+            nixosConfigurations = self.nixosConfigurations;
+            homeConfigurations = self.homeConfigurations;
         };
     };
 }
