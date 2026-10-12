@@ -15,67 +15,69 @@
 
     outputs = inputs@{self, nixpkgs, home-manager, plasma-manager, ...}:
     let
-        # ----------- SYSTEM  SETTINGS ----------- #
+        lib = nixpkgs.lib;
+
         system = "x86_64-linux";
-        # profile
         timezone = "America/Halifax";
         locale = "en_CA.UTF-8";
 
-        hosts = builtins.filter (x: x != null) (
-            lib.mapAttrsToList(name: value: if (value == "directory") then name else null)(
-                builtins.readDir ./hosts
-            )
-        );
-
-        # ----------- USER SETTINGS ----------- #
-        userSettings = {
-            username = "apaquette";
-            name = "Alex Paquette";
-            email = "alexandre.d.paquette@gmail.com";
-            dotfilesDir = "~/.dotfiles";
+        userRegistry = {
+            apaquette = {
+                name = "Alex Paquette";
+                email = "alexandre.d.paquette@gmail.com";
+                dotfilesDir = "~/.dotfiles";
+            };
         };
 
-        lib = nixpkgs.lib;
+        hostUsers = {
+            nixos-desktop = "apaquette";
+            nixos-thinkpad = "apaquette";
+        };
+
+        userSettingsFor = username:
+            userRegistry.${username} // { inherit username; };
         
         pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
         };
     in {
-        nixosConfigurations = builtins.listToAttrs (
-            map (host: {
-                name = host;
-                value = lib.nixosSystem {
-                    inherit system;
-                    modules = [
-                        ./hosts/${host}/configuration.nix
-                        ./hosts/${host}/imports.nix
-                    ];
+        nixosConfigurations = lib.mapAttrs
+        (host: username:
+            lib.nixosSystem {
+            inherit system;
 
-                    specialArgs = {
-                        inherit userSettings;
-                        inherit host;
-                        inherit timezone;
-                        inherit locale;
-                    };
-                };
-            }) hosts
-        );
+            modules = [
+                ./hosts/${host}/configuration.nix
+                ./hosts/${host}/imports.nix
+                ./users/${username}/nixos.nix
+            ];
 
-        homeConfigurations = {
-            ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                modules = [ 
-                    inputs.nix-flatpak.homeManagerModules.nix-flatpak
-                    inputs.plasma-manager.homeModules.plasma-manager
-                    ./users/${userSettings.username}/home.nix
-                    ./users/${userSettings.username}/imports.nix
-                ];
-                extraSpecialArgs = {
-                    inherit userSettings;
-                };
+            specialArgs = {
+                inherit host timezone locale;
+                userSettings = userSettingsFor username;
             };
-        };
+            })
+        hostUsers;
+
+        homeConfigurations = lib.mapAttrs
+        (username: settings:
+            home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+
+            modules = [
+                inputs.nix-flatpak.homeManagerModules.nix-flatpak
+                inputs.plasma-manager.homeModules.plasma-manager
+                ./users/${username}/home.nix
+                ./users/${username}/imports.nix
+            ];
+
+            extraSpecialArgs = {
+                userSettings = settings // { inherit username; };
+            };
+            })
+        userRegistry;
+
         checks.${system} = import ./tests/checks.nix {
             inherit pkgs;
             nixosConfigurations = self.nixosConfigurations;

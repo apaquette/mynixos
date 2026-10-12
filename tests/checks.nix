@@ -106,5 +106,7 @@ in
     (homeConfig.programs.vscode.enable)
     (homeConfig.services.flatpak.enable)
     (builtins.hasAttr "nextcloud-client" homeConfig.systemd.user.services)
+    (homeConfig.programs.git.settings.user.name == "Alex Paquette")
+    (homeConfig.programs.git.settings.user.email == "alexandre.d.paquette@gmail.com")
   ];
 }
