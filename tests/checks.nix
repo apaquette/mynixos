@@ -36,6 +36,11 @@ let
     (config.programs.git.enable)
     (config.programs.firefox.enable)
     (config.services.flatpak.enable)
+    (config.users.users.apaquette.shell.pname == "fish")
+    (config.users.users.apaquette.extraGroups == [
+      "networkmanager"
+      "wheel"
+    ])
   ];
 in
 {
@@ -77,6 +82,8 @@ in
     (desktopConfig.services.displayManager.autoLogin.user == "apaquette")
     (desktopConfig.programs.steam.enable)
     (desktopConfig.hardware.xone.enable)
+    (desktopConfig.services.displayManager.autoLogin.enable)
+    (desktopConfig.services.displayManager.autoLogin.user == "apaquette")
   ];
 
   thinkpad = mkCheck "thinkpad" [
