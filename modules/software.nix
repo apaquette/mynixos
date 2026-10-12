@@ -46,7 +46,6 @@
     obsidian
     zip
     onlyoffice-desktopeditors
-    nextcloud-client
 
     iw
   ];

@@ -6,7 +6,24 @@ let
   homeConfig = homeConfigurations.apaquette.config;
 
   mkCheck = name: assertions:
-    assert builtins.all (assertion: assertion) assertions;
+    let
+      indexedAssertions = builtins.genList
+        (index: {
+          inherit index;
+          passed = builtins.elemAt assertions index;
+        })
+        (builtins.length assertions);
+
+      failedAssertions = builtins.filter
+        (assertion: !assertion.passed)
+        indexedAssertions;
+
+      failedIndices = builtins.concatStringsSep ", "
+        (map (assertion: builtins.toString assertion.index)
+          failedAssertions);
+    in
+    assert failedAssertions == []
+      || throw "${name}: failed assertion indices: ${failedIndices}";
     pkgs.runCommand "mynixos-${name}" { } ''
       printf '%s\n' '${name}: passed' > "$out"
     '';
@@ -41,6 +58,7 @@ let
       "networkmanager"
       "wheel"
     ])
+    (!(builtins.elem pkgs.nextcloud-client config.environment.systemPackages))
   ];
 in
 {
@@ -114,5 +132,36 @@ in
     (homeConfig.programs.git.settings.user.email == "alexandre.d.paquette@gmail.com")
     (builtins.elem pkgs.kdePackages.kate homeConfig.home.packages)
     (builtins.elem pkgs.kdePackages.kwalletmanager homeConfig.home.packages)
+    # VS Code configuration
+    (homeConfig.programs.vscode.package == pkgs.vscode.fhs)
+    (homeConfig.programs.vscode.profiles.default.enableUpdateCheck == false)
+    (homeConfig.programs.vscode.profiles.default.enableExtensionUpdateCheck == false)
+    (homeConfig.programs.vscode.profiles.default.userSettings."git.autofetch" == true)
+    (homeConfig.programs.vscode.profiles.default.userSettings."window.titleBarStyle" == "custom")
+
+    (builtins.elem pkgs.vscode-extensions.bbenoist.nix
+      homeConfig.programs.vscode.profiles.default.extensions)
+    (builtins.elem pkgs.vscode-extensions.jnoortheen.nix-ide
+      homeConfig.programs.vscode.profiles.default.extensions)
+
+    # Nextcloud client
+    (builtins.elem pkgs.nextcloud-client homeConfig.home.packages)
+    (homeConfig.systemd.user.services.nextcloud-client.Service.ExecStart
+      == [ "${pkgs.nextcloud-client}/bin/nextcloud" ])
+    (homeConfig.systemd.user.services.nextcloud-client.Service.Restart == "on-failure")
+    (builtins.elem "graphical-session.target"
+      homeConfig.systemd.user.services.nextcloud-client.Install.WantedBy)
+
+    # Declarative Flatpak
+    (homeConfig.services.flatpak.enable)
+    (builtins.any
+      (package:
+        package.appId == "ai.storyteller.photocraft"
+        && package.sha256 == "sha256-lYKubS66svupb4Wa52AZvy8FLVWqlVKR9sUpcWUdfcw="
+      )
+      homeConfig.services.flatpak.packages)
+
+    # Plasma Manager is available but intentionally inactive
+    (!homeConfig.programs.plasma.enable)
   ];
 }

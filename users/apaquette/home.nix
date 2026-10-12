@@ -14,6 +14,7 @@
     whatsapp-electron
     kdePackages.kate
     kdePackages.kwalletmanager
+    nextcloud-client
     jellyfin-rpc
     anki
     obs-studio
@@ -27,8 +28,6 @@
   # plain files is through 'home.file'.
   home.file = { };
   home.sessionVariables = { };
-
-  nixpkgs.config.allowUnfree = true; # needed for vs code
 
   programs = {
     home-manager.enable = true;
