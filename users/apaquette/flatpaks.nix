@@ -7,8 +7,8 @@
     packages = [
       {
         appId = "ai.storyteller.photocraft";
-        bundle = "file://${../../flatpaks/photocraft-0.5.0-linux-x86_64.flatpak}";
-        sha256 = "sha256-lYKubS66svupb4Wa52AZvy8FLVWqlVKR9sUpcWUdfcw=";
+        bundle = "file://${../../flatpaks/photocraft-0.16.0-linux-x86_64.flatpak}";
+        sha256 = "sha256-uLhEpJUfaHci/Mrn5E82C72v3xEpER2NEB6JNJTqMgI=";
       }
       {
         appId = "ai.storyteller.filmcraft";
