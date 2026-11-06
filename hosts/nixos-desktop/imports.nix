@@ -9,5 +9,6 @@
     ../../modules/software.nix
     ../../modules/kde.nix
     ../../modules/settings.nix
+    ../../modules/local-ai.nix
   ];
 }

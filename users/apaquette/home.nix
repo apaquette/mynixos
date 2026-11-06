@@ -27,7 +27,9 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = { };
-  home.sessionVariables = { };
+  home.sessionVariables = { 
+    OLLAMA_API_BASE = "http://127.0.0.1:11434";
+  };
 
   programs = {
     home-manager.enable = true;

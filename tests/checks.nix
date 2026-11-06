@@ -1,9 +1,14 @@
-{ pkgs, nixosConfigurations, homeConfigurations }:
+{ pkgs, pkgs-unstable, nixosConfigurations, homeConfigurations }:
 
 let
   desktopConfig = nixosConfigurations.nixos-desktop.config;
   thinkpadConfig = nixosConfigurations.nixos-thinkpad.config;
   homeConfig = homeConfigurations.apaquette.config;
+
+  # Safely checks a nested configuration value.
+  # Returns false when any attribute in the path is missing.
+  configValueEquals = config: path: expected:
+    (pkgs.lib.attrByPath path null config) == expected;
 
   mkCheck = name: assertions:
     let
@@ -157,11 +162,89 @@ in
     (builtins.any
       (package:
         package.appId == "ai.storyteller.photocraft"
-        && package.sha256 == "sha256-lYKubS66svupb4Wa52AZvy8FLVWqlVKR9sUpcWUdfcw="
+        && package.sha256 == "sha256-uLhEpJUfaHci/Mrn5E82C72v3xEpER2NEB6JNJTqMgI="
+      )
+      homeConfig.services.flatpak.packages)
+    (builtins.any
+      (package:
+        package.appId == "ai.storyteller.filmcraft"
+        && package.sha256 == "sha256-yabHY7v2v06maiBPVkU5LOo5/punTwiLDAgUnEltoaA="
       )
       homeConfig.services.flatpak.packages)
 
     # Plasma Manager is available but intentionally inactive
     (!homeConfig.programs.plasma.enable)
   ];
+
+  local-ai = mkCheck "local-ai" [
+    # Host isolation
+    (desktopConfig.services.ollama.enable)
+    (desktopConfig.services.open-webui.enable)
+    (!thinkpadConfig.services.ollama.enable)
+    (!thinkpadConfig.services.open-webui.enable)
+
+    # GPU acceleration
+    (desktopConfig.hardware.graphics.enable)
+    (desktopConfig.services.ollama.package == pkgs-unstable.ollama-vulkan)
+
+    # Ollama service
+    (desktopConfig.services.ollama.host == "127.0.0.1")
+    (desktopConfig.services.ollama.port == 11434)
+
+    # Ollama resource limits
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "ollama" "environment" "OLLAMA_CONTEXT_LENGTH" ]
+      "32768")
+
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "ollama" "environment" "OLLAMA_MAX_LOADED_MODELS" ]
+      "1")
+
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "ollama" "environment" "OLLAMA_NUM_PARALLEL" ]
+      "1")
+    (desktopConfig.services.ollama.syncModels)
+
+    # KV cache optimization
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "ollama" "environment" "OLLAMA_FLASH_ATTENTION" ]
+      "1")
+
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "ollama" "environment" "OLLAMA_KV_CACHE_TYPE" ]
+      "q8_0")
+
+    # Ollama network security
+    (!desktopConfig.services.ollama.openFirewall)
+
+    # Open WebUI service
+    (desktopConfig.services.open-webui.host == "127.0.0.1")
+    (desktopConfig.services.open-webui.port == 8080)
+    (!desktopConfig.services.open-webui.openFirewall)
+
+    # Ollama integration
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "open-webui" "environment" "OLLAMA_BASE_URL" ]
+      "http://127.0.0.1:11434")
+
+    # Web search
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "open-webui" "environment" "ENABLE_WEB_SEARCH" ]
+      "True")
+
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "open-webui" "environment" "WEB_SEARCH_ENGINE" ]
+      "duckduckgo")
+
+    (configValueEquals desktopConfig
+      [ "systemd" "services" "open-webui" "environment" "DDGS_BACKEND" ]
+      "duckduckgo")
+
+    # Developer tools
+    (builtins.elem pkgs.aider-chat
+      desktopConfig.users.users.apaquette.packages)
+    (builtins.elem pkgs.vulkan-tools
+      desktopConfig.users.users.apaquette.packages)
+  ];
 }
+

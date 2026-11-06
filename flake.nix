@@ -3,6 +3,7 @@
 
     inputs = { 
         nixpkgs.url = "nixpkgs/nixos-25.11";
+        nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
         home-manager.url = "github:nix-community/home-manager/release-25.11";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -41,6 +42,11 @@
             inherit system;
             config.allowUnfree = true;
         };
+
+        pkgs-unstable = import inputs.nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+        };
     in {
         nixosConfigurations = lib.mapAttrs
         (host: username:
@@ -54,7 +60,7 @@
             ];
 
             specialArgs = {
-                inherit host timezone locale;
+                inherit host timezone locale pkgs-unstable;
                 userSettings = userSettingsFor username;
             };
             })
@@ -79,7 +85,7 @@
         userRegistry;
 
         checks.${system} = import ./tests/checks.nix {
-            inherit pkgs;
+            inherit pkgs pkgs-unstable;
             nixosConfigurations = self.nixosConfigurations;
             homeConfigurations = self.homeConfigurations;
         };
