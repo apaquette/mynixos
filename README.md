@@ -11,7 +11,7 @@ The configuration is built on the following goals:
 
 ## Features
 ### Modular Architecture
-The repsitory is organized around a module-based structure. System and user configurations are split into logical components such as settings, software, and gaming to name a few. This allows each host to selectively import only what it needs, maintaining clarity and avoiding duplications.
+The repository is organized around a module-based structure. System and user configurations are split into logical components such as settings, software, gaming, KDE Plasma, local AI, and flatpaks to name a few. This allows each host to selectively import only what it needs, maintaining clarity and avoiding duplications.
 
 ### Multi-Host Support
 The project currently defines configurations for:
@@ -23,18 +23,69 @@ Both systems import from a shared library of modules containing common packages,
 ### Home Manager Integration
 Home Manager is integrated directly through the flake, ensuring that system-level and user-level configuration remain consistent and reproducible. User environments, dotfiles, and program settings are fully declared in Nix code.
 
+### Desktop Environment (KDE Plasma)
+The desktop environment is configured with KDE Plasma 6:
+- SDDM as display manager
+- KWin effects for smooth animations
+- Virtual desktops for workflow organization
+- Custom panels and widgets
+- Breeze Dark theme with custom fonts
+- Konsole terminal configuration
+
+### Flatpak Applications
+Flatpak support is enabled with local bundle files for:
+- Photocraft (ai.storyteller.photocraft)
+- Filmcraft (ai.storyteller.filmcraft)
+
+These applications are installed from local flatpak bundles rather than Flathub, ensuring offline availability and version control.
+
+### Local AI Stack
+Local AI inference is configured with:
+- Ollama with AMD GPU Vulkan acceleration
+- Open WebUI for general-purpose AI interface
+- Model management with automatic sync and unload
+- Web search integration (DuckDuckGo)
+- Resource optimization for 6700 XT GPU
+
+### Gaming & Emulation
+Gaming support includes:
+- Steam with Proton-GE compatibility layer
+- Heroic launcher for Epic Games and GOG
+- Prism Launcher for Minecraft
+- Dolphin emulator (GameCube/Wii)
+- Xenia (Xbox 360)
+- RPCS3 (PS3)
+- Steam ROM Manager
+
+### Testing & Quality
+A comprehensive test suite exists in the `tests/` directory with unit tests for:
+- All modules (applications, base, desktop, packages, security)
+- User-specific configurations
+- Automated validation of configuration correctness
+
+### Security & Certificates
+Security features include:
+- PKI certificate management for local development
+- PAM configuration
+- Local certificates stored in `certs/` directory
+
 ### Repository Structure
 - `hosts/` contains device-specific system configurations.
 - `modules/` contains shared modules that can be imported by hosts.
 - `users/` contains Home Manager user configurations and modules.
-- `flake.nix` declares inputs, outputs, and host definitions.
+- `flatpaks/` contains local flatpak bundle files.
+- `certs/` contains certificates for local development.
+- `tests/` contains unit tests for all modules.
 
 ## Learning Outcomes
 Through this project, I developed hands-on experience with:
 - Nix expression language and declarative system design
-- Flakes, input pinning, and reproducible environemnts
+- Flakes, input pinning, and reproducible environments
 - Home Manager for user-level configuration
 - Modular configuration engineering
 - Managing multi-host systems under a single repository
+- KDE Plasma customization and desktop environment management
+- Local AI stack deployment with GPU acceleration
+- Flatpak application management with local bundles
 
 This repository continues to evolve as I refine my setup, add new modules, and deepen my knowledge with Nix and NixOS.
