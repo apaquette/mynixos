@@ -22,11 +22,12 @@
         timezone = "America/Halifax";
         locale = "en_CA.UTF-8";
 
-        userRegistry = {
+        userSettings = {
             apaquette = {
                 name = "Alex Paquette";
                 email = "alexandre.d.paquette@gmail.com";
                 dotfilesDir = "~/.dotfiles";
+                username = "apaquette";
             };
         };
 
@@ -35,12 +36,14 @@
             nixos-thinkpad = "apaquette";
         };
 
-        userSettingsFor = username:
-            userRegistry.${username} // { inherit username; };
-        
         pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
+        inherit system;
+        config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+            "electron-39.8.10"
+            ];
+        };
         };
 
         pkgs-unstable = import inputs.nixpkgs-unstable {
@@ -51,43 +54,44 @@
         nixosConfigurations = lib.mapAttrs
         (host: username:
             lib.nixosSystem {
-            inherit system;
+                inherit system;
 
-            modules = [
-                ./hosts/${host}/configuration.nix
-                ./hosts/${host}/imports.nix
-                ./users/${username}/nixos.nix
-            ];
+                modules = [
+                    (./. + "/hosts/${host}/configuration.nix")
+                    (./. + "/hosts/${host}/imports.nix")
+                    (./. + "/users/${username}/nixos.nix")
+                ];
 
-            specialArgs = {
-                inherit host timezone locale pkgs-unstable;
-                userSettings = userSettingsFor username;
-            };
+                specialArgs = {
+                    inherit host username timezone locale pkgs-unstable;
+                    userSettings = userSettings.${username};
+                };
             })
         hostUsers;
 
         homeConfigurations = lib.mapAttrs
         (username: settings:
             home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
+                inherit pkgs;
 
-            modules = [
-                inputs.nix-flatpak.homeManagerModules.nix-flatpak
-                inputs.plasma-manager.homeModules.plasma-manager
-                ./users/${username}/home.nix
-                ./users/${username}/imports.nix
-            ];
+                modules = [
+                    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+                    inputs.plasma-manager.homeModules.plasma-manager
+                    (./. + "/users/${username}/home.nix")
+                    (./. + "/users/${username}/imports.nix")
+                ];
 
-            extraSpecialArgs = {
-                userSettings = settings // { inherit username; };
-            };
+                extraSpecialArgs = {
+                    userSettings = settings;
+                };
             })
-        userRegistry;
+        userSettings;
 
         checks.${system} = import ./tests/checks.nix {
-            inherit pkgs pkgs-unstable;
-            nixosConfigurations = self.nixosConfigurations;
-            homeConfigurations = self.homeConfigurations;
+        inherit pkgs pkgs-unstable;
+        userSettings = userSettings.apaquette;
+        nixosConfigurations = self.nixosConfigurations;
+        homeConfigurations = self.homeConfigurations;
         };
     };
 }

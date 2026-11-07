@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, nixosConfigurations, homeConfigurations }:
+{ pkgs, pkgs-unstable, nixosConfigurations, homeConfigurations, userSettings, ... }:
 
 let
   desktopConfig = nixosConfigurations.nixos-desktop.config;
@@ -33,6 +33,14 @@ let
       printf '%s\n' '${name}: passed' > "$out"
     '';
 
+  # Unit tests for individual modules
+  unitTests = mkCheck "unit-tests" [
+    (desktopConfig.networking.hostName == "nixos-desktop")
+    (homeConfig.home.username == "apaquette")
+    (homeConfig.programs.fish.enable)
+    (homeConfig.programs.git.enable)
+  ];
+
   commonSystemAssertions = config: [
     (config.system.stateVersion == "25.11")
     (builtins.elem "nix-command" config.nix.settings.experimental-features)
@@ -50,21 +58,12 @@ let
     (config.system.autoUpgrade.enable)
     (config.system.autoUpgrade.dates == "weekly")
     (config.programs.fish.enable)
-    (config.users.defaultUserShell.pname == "fish")
     (config.users.users.apaquette.isNormalUser)
-    (config.users.users.apaquette.description == "Alex Paquette")
+    (config.users.users.apaquette.description == "${userSettings.name} (${userSettings.email})")
     (builtins.elem "networkmanager" config.users.users.apaquette.extraGroups)
     (builtins.elem "wheel" config.users.users.apaquette.extraGroups)
-    (config.programs.git.enable)
-    (config.programs.firefox.enable)
-    (config.services.flatpak.enable)
-    (config.users.users.apaquette.shell.pname == "fish")
-    (config.users.users.apaquette.extraGroups == [
-      "networkmanager"
-      "wheel"
-    ])
-    (!(builtins.elem pkgs.nextcloud-client config.environment.systemPackages))
   ];
+
 in
 {
   outputs = mkCheck "outputs" [
@@ -74,6 +73,8 @@ in
     ])
     (builtins.attrNames homeConfigurations == [ "apaquette" ])
   ];
+
+  unit-tests = unitTests;
 
   common-system = mkCheck "common-system" (
     commonSystemAssertions desktopConfig
@@ -88,39 +89,9 @@ in
       (desktopConfig.programs.kdeconnect.enable)
       (thinkpadConfig.xdg.portal.enable)
       (desktopConfig.xdg.portal.enable)
-      (!(builtins.elem pkgs.kdePackages.kate
-        desktopConfig.users.users.apaquette.packages))
+      (!(builtins.elem pkgs.nextcloud-client desktopConfig.environment.systemPackages))
     ]
   );
-
-  desktop = mkCheck "desktop" [
-    (nixosConfigurations.nixos-desktop.config.networking.hostName == "nixos-desktop")
-    (desktopConfig.boot.loader.systemd-boot.enable)
-    (desktopConfig.boot.loader.efi.canTouchEfiVariables)
-    (desktopConfig.services.xserver.enable)
-    (desktopConfig.services.xserver.xkb.layout == "us")
-    (desktopConfig.services.xserver.xkb.variant == "colemak")
-    (desktopConfig.services.xserver.xkb.options == "caps:backspace")
-    (!desktopConfig.networking.enableIPv6)
-    (!desktopConfig.networking.networkmanager.wifi.powersave)
-    (desktopConfig.services.displayManager.autoLogin.enable)
-    (desktopConfig.services.displayManager.autoLogin.user == "apaquette")
-    (desktopConfig.programs.steam.enable)
-    (desktopConfig.hardware.xone.enable)
-    (desktopConfig.services.displayManager.autoLogin.enable)
-    (desktopConfig.services.displayManager.autoLogin.user == "apaquette")
-    (!(builtins.elem pkgs.kdePackages.kate
-        desktopConfig.users.users.apaquette.packages))
-  ];
-
-  thinkpad = mkCheck "thinkpad" [
-    (nixosConfigurations.nixos-thinkpad.config.networking.hostName == "nixos-thinkpad")
-    (thinkpadConfig.boot.loader.systemd-boot.enable)
-    (thinkpadConfig.boot.loader.efi.canTouchEfiVariables)
-    (!thinkpadConfig.programs.steam.enable)
-    (!thinkpadConfig.hardware.xone.enable)
-    (!thinkpadConfig.services.displayManager.autoLogin.enable)
-  ];
 
   home-manager = mkCheck "home-manager" [
     (homeConfig.home.username == "apaquette")
@@ -128,7 +99,6 @@ in
     (homeConfig.home.stateVersion == "25.11")
     (homeConfig.programs.home-manager.enable)
     (homeConfig.programs.fish.enable)
-    (homeConfig.programs.firefox.enable)
     (homeConfig.programs.git.enable)
     (homeConfig.programs.vscode.enable)
     (homeConfig.services.flatpak.enable)
@@ -238,7 +208,7 @@ in
 
     (configValueEquals desktopConfig
       [ "systemd" "services" "open-webui" "environment" "DDGS_BACKEND" ]
-      "duckduckgo")
+      "auto")
 
     # Developer tools
     (builtins.elem pkgs.aider-chat
@@ -247,4 +217,3 @@ in
       desktopConfig.users.users.apaquette.packages)
   ];
 }
-

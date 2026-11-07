@@ -1,14 +1,14 @@
-
-{ pkgs, userSettings, ... }:
+{ pkgs, username, userSettings, ... }:
 
 {
-  users.users.${userSettings.username} = {
+  users.users.${username} = {
     isNormalUser = true;
-    shell = pkgs.fish;
-    description = userSettings.name;
+    description = "${userSettings.name} (${userSettings.email})";
     extraGroups = [
       "networkmanager"
       "wheel"
     ];
+    shell = pkgs.fish;
+    createHome = true;
   };
 }
