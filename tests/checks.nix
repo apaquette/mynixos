@@ -146,6 +146,18 @@ in
     (!homeConfig.programs.plasma.enable)
   ];
 
+  docker = mkCheck "docker" [
+    # Docker is enabled only on the desktop host.
+    (desktopConfig.virtualisation.docker.enable)
+    (!thinkpadConfig.virtualisation.docker.enable)
+
+    # Use the maintained Docker package rather than the insecure default alias.
+    (desktopConfig.virtualisation.docker.package == pkgs.docker_29)
+
+    # The desktop user can access the Docker daemon.
+    (builtins.elem "docker" desktopConfig.users.users.${userSettings.username}.extraGroups)
+  ];
+
   local-ai = mkCheck "local-ai" [
     # Host isolation
     (desktopConfig.services.ollama.enable)

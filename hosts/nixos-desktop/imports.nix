@@ -10,5 +10,6 @@
     ../../modules/kde.nix
     ../../modules/settings.nix
     ../../modules/local-ai.nix
+    ../../modules/docker.nix
   ];
 }
