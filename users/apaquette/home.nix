@@ -35,7 +35,6 @@
       };
     };
   };
-
   home.stateVersion = "25.11";
   home.username = userSettings.username;
   home.homeDirectory = "/home/${userSettings.username}";

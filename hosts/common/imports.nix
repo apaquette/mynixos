@@ -15,5 +15,9 @@
     ../../modules/desktop/xserver.nix
     ../../modules/desktop/portal.nix
     ../../modules/kde.nix
+    
+    ../../modules/security/pki.nix
+
+    ../../modules/packages/common-packages.nix
   ];
 }

@@ -7,4 +7,5 @@
   time.timeZone = timezone;
   i18n.defaultLocale = locale;
   programs.fish.enable = true;
+  programs.nix-ld.enable = true;
 }
